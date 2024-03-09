@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+// DEgisiklik deneme
 
 // Sifreleme islevi
 void encrypt(char *text, int key)
