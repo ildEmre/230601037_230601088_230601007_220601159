@@ -15,28 +15,33 @@ void encryptDecrypt(const vector<char>& input, const vector<char>& key, vector<c
 }
 
 int main(){
-    cout << "1. Metin sifrele.\n";
-    cout << "2. Sifrelenmis metni coz.\n";
-    cout << "Seciminizi giriniz: ";
-    
-    int secim;
-    cin >> secim;
-
+    int secim = 0;
+    while(secim != 1 && secim != 2){
+        cout << "1. Metin sifrele.\n";
+        cout << "2. Sifrelenmis metni coz.\n";
+        cout << "Seciminizi giriniz: ";
+        cin >> secim;
+        if(secim != 1 && secim != 2){
+            cout << "Gecersiz secim. Lutfen tekrar deneyiniz." << endl;
+        }
+        else
+            break;
+    }
     if(secim == 1){
         // metin şifreleme
         string dosyaIsim;
         cout << "Sifrelemek istediginiz dosyanin ismini giriniz: (orn: text.txt): ";
         cin >> dosyaIsim;
-        ifstream inputFile(dosyaIsim);
-        if (!inputFile.is_open()) {
+        ifstream inputDosya(dosyaIsim);
+        if (!inputDosya.is_open()) {
             cout << "Dosya bulunamadi." << endl;
             return 0;
         }
 
         // tüm text dosyasını okuyup vektör dizisine ata
-        vector<char> normalMetin(istreambuf_iterator<char>(inputFile), {});
+        vector<char> normalMetin(istreambuf_iterator<char>(inputDosya), {});
 
-        inputFile.close();
+        inputDosya.close();
         vector<char> key = {'a', 'n', 'a', 'h', 't', 'a', 'r'}; // şifreleme işlemi için anahtar oluştur
 
         // XOR şifrelemesi kullanarak dosya'yı şifreleme
