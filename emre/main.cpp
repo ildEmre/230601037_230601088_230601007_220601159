@@ -16,12 +16,13 @@ void encryptDecrypt(const vector<char>& input, const vector<char>& key, vector<c
 
 int main(){
     int secim = 0;
-    while(secim != 1 && secim != 2){
-        cout << "1. Metin sifrele.\n";
-        cout << "2. Sifrelenmis metni coz.\n";
+    while(secim != 1 && secim != 2 && secim != 3){
+        cout << "1. Dosya sifrele." << endl;
+        cout << "2. Sifrelenmis dosyayi coz." << endl;
+        cout << "3. Girilecek metni sifrele." << endl;
         cout << "Seciminizi giriniz: ";
         cin >> secim;
-        if(secim != 1 && secim != 2){
+        if(secim != 1 && secim != 2 && secim != 3){
             cout << "Gecersiz secim. Lutfen tekrar deneyiniz." << endl;
         }
         else
@@ -63,7 +64,7 @@ int main(){
 
         outputDosya.close();
 
-        cout << "Sifreleme basarili. Sifrelenmis metin sectiginiz dosyaya yazildi." << endl;
+        cout << "Sifreleme basarili. Sifrelenmis metin " << dosyaIsim << " dosyasina yazildi." << endl;
     } else if(secim == 2){
         // şifrelenmiş txt dosyasını çözme
         string sifrelenmis;
@@ -77,7 +78,6 @@ int main(){
 
         // tüm dosyayı okuyup vektör dizisine ata
         vector<char> sifrelenmisMetin(istreambuf_iterator<char>(inputDosya), {});
-
         
         inputDosya.close();
 
@@ -101,8 +101,29 @@ int main(){
         outputDosya.write(cozulmusMetin.data(), cozulmusMetin.size());
         outputDosya.close();
 
-        cout << "Sifre cozme basarili. Cozulmus metin sectiginiz dosyaya yazildi." << endl;
+        cout << "Sifre cozme basarili. Cozulmus metin " << outputDosyaIsim << " dosyasina yazildi." << endl;
     } 
+    else if(secim == 3){
+        string input;
+        cout << "Sifrelemek istediginiz metni giriniz: ";
+        cin.ignore();
+        getline(cin, input);
+        vector <char> normalMetin(input.begin(), input.end());
+        vector<char> key = {'a', 'n', 'a', 'h', 't', 'a', 'r'};
+        vector<char> sifrelenmisMetin;
+        encryptDecrypt(normalMetin, key, sifrelenmisMetin);
+        cout << "Sifreleme basarili. Sifrelenmis veriyi saklamak icin dosya ismi giriniz(Ornek: Dosya.txt): ";
+        string dosyaIsim;
+        cin >> dosyaIsim;
+        ofstream outputDosya(dosyaIsim);
+        if(!outputDosya.is_open()){
+            cout << "Dosya acilamadi." << endl;
+            return 0;
+        }
+        outputDosya.write(sifrelenmisMetin.data(), sifrelenmisMetin.size());
+        outputDosya.close();
+        cout << "Basarili. Sifrelenmis veri " << dosyaIsim << " dosyasina yazildi." << endl;
+    }
     else{
         cout << "Gecersiz secim." << endl;
     }
